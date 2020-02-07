@@ -1,0 +1,86 @@
+<h1>EONET</h1>
+<br />
+<form>
+    <div class="row">
+        <div class="col col-xs-12 col-sm-3">
+            <div class="form-group">
+                <label for="dateFilter"><b>Date</b></label>
+                <input type="date" class="form-control" id="dateFilter" name="dateFilter" [(ngModel)]="request.filter.date" />
+            </div>
+        </div>
+        <div class="col col-xs-12 col-sm-3">
+            <div class="form-group">
+                <label for="statusFilter"><b>Status</b></label>
+                <select class="form-control" id="statusFilter" name="statusFilter" [(ngModel)]="request.filter.status">
+                    <option [ngValue]="undefined" selected>Select</option>
+                    <option value="open">Open</option>
+                    <option value="closed">Closed</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col col-xs-12 col-sm-3">
+            <div class="form-group">
+                <label for="categoryFilter"><b>Category</b></label>
+                <select class="form-control" id="categoryFilter" name="categoryFilter" [(ngModel)]="request.filter.idCategory">
+                    <option [ngValue]="undefined" selected>Select</option>
+                    <option *ngFor="let category of categories" [ngValue]="category.id">{{category.title}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col col-xs-12 col-sm-3">
+            <div class="form-group">
+                <label>&nbsp;</label>
+
+                <button type="button" class="btn btn-primary form-control" (click)="search();">Search</button>
+            </div>
+        </div>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                <div class="cursorPointer" (click)="changeOrder('category');">
+                    <i class="fas" [ngClass]="{
+                   'fa-sort': request.order.orderBy != 'category',
+                   'fa-sort-up': request.order.orderBy == 'category' && request.order.ascending,
+                   'fa-sort-down': request.order.orderBy == 'category' && !request.order.ascending }"></i> Categories
+                </div>
+            </th>
+            <th>
+                <div class="cursorPointer" (click)="changeOrder('status');">
+                    <i class="fas" [ngClass]="{
+                   'fa-sort': request.order.orderBy != 'status',
+                   'fa-sort-up': request.order.orderBy == 'status' && request.order.ascending,
+                   'fa-sort-down': request.order.orderBy == 'status' && !request.order.ascending }"></i> Status
+                </div>
+            </th>
+            <th>
+                <div class="cursorPointer" (click)="changeOrder('date');">
+                    <i class="fas" [ngClass]="{
+                   'fa-sort': request.order.orderBy != 'date',
+                   'fa-sort-up': request.order.orderBy == 'date' && request.order.ascending,
+                   'fa-sort-down': request.order.orderBy == 'date' && !request.order.ascending }"></i> Date
+                </div>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let event of events" [class.table-secondary]="event.closed != null">
+            <td>{{event.title}}</td>
+            <td>{{joinCategories(event.categories)}}</td>
+            <td>{{event.closed ? "Closed":"Open"}}</td>
+            <td>{{getDateEvent(event)}}</td>
+            <td></td>
+        </tr>
+        <tr *ngIf="events.length == 0">
+            <td colspan="5" *ngIf="loadingEvents">Loading events.</td>
+            <td colspan="5" *ngIf="!loadingEvents">No events found.</td>
+        </tr>
+    </tbody>
+</table>
