@@ -1,0 +1,74 @@
+<h1>Event Detail</h1>
+
+<br />
+<br />
+<div *ngIf="event == null">
+    Loading event...<br /><br />
+</div>
+<div *ngIf="event != null">
+    <div class="row">
+        <div class="col col-xs-12 col-sm-3">
+            <b>ID</b>
+        </div>
+        <div class="col col-xs-12 col-sm-9">
+            {{event.id}}
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col col-xs-12 col-sm-3">
+            <b>Title</b>
+        </div>
+        <div class="col col-xs-12 col-sm-9">
+            {{event.title}}
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col col-xs-12 col-sm-3">
+            <b>Categories</b>
+        </div>
+        <div class="col col-xs-12 col-sm-9">
+            {{joinCategories(event.categories)}}
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col col-xs-12 col-sm-3">
+            <b>Status</b>
+        </div>
+        <div class="col col-xs-12 col-sm-9">
+            <span *ngIf="event.closed != null">Closed - {{formatDate(event.closed)}}</span>
+            <span *ngIf="event.closed == null">Open</span>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col col-xs-12 col-sm-3">
+            <b>Description</b>
+        </div>
+        <div class="col col-xs-12 col-sm-9">
+            {{event.description}}
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col col-xs-12 col-sm-3">
+            <b>Sources</b>
+        </div>
+        <div class="col col-xs-12 col-sm-9">
+            <ul>
+                <li *ngFor="let source of event.sources">
+                    <a [href]="source.url">{{source.id}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col col-xs-12 col-sm-3">
+        <button type="button" class="btn btn-primary form-control" [routerLink]="['']">Go back</button>
+    </div>
+</div>
+

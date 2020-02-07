@@ -18,6 +18,10 @@ export class EventService {
   public GetEvents(eventRequest: DtoEventsRequest) {
     return this.http.post<DtoSimpleEvent[]>(this.baseUrl + 'api/Event/GetEvents', eventRequest);
   }
+
+  public GetEventById(id: string) {
+    return this.http.get<DtoEvent>(this.baseUrl + 'api/Event/GetEventById?id='+id);
+  }
 }
 
 /* Request */

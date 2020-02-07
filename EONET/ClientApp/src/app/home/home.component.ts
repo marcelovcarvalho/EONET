@@ -39,11 +39,15 @@ export class HomeComponent {
     return categories.map(x => x.title).join(", ");
   }
 
-  public getDateEvent(event: DtoSimpleEvent) {
-    var lastGeometry: DtoGeometry = event.geometries[event.geometries.length - 1];
-    var date: string = lastGeometry.date.toLocaleString();
+  public formatDate(dateParam: Date) {
+    var date: string = dateParam.toLocaleString();
     date = date.replace(/([0-9]{4})-([0-9]{2})-([0-9]{2}).*/gi, "$3/$2/$1");
     return date;
+  }
+
+  public getDateEvent(event: DtoSimpleEvent) {
+    var lastGeometry: DtoGeometry = event.geometries[event.geometries.length - 1];
+    return this.formatDate(lastGeometry.date);
   }
 
   public changeOrder(orderBy: string) {

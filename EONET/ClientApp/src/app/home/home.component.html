@@ -67,7 +67,8 @@
                    'fa-sort-down': request.order.orderBy == 'date' && !request.order.ascending }"></i> Date
                 </div>
             </th>
-            <th></th>
+            <th>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -76,7 +77,7 @@
             <td>{{joinCategories(event.categories)}}</td>
             <td>{{event.closed ? "Closed":"Open"}}</td>
             <td>{{getDateEvent(event)}}</td>
-            <td></td>
+            <td><a class="nav-link" [routerLink]="['/event/'+event.id]"><i class="fas fa-eye"></i></a></td>
         </tr>
         <tr *ngIf="events.length == 0">
             <td colspan="5" *ngIf="loadingEvents">Loading events.</td>
